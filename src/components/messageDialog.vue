@@ -3,7 +3,7 @@
     <div class="overlay">
       <div class="inner">
         <div v-if="title" class="title">{{ title }}</div>
-        <div class="content" :style="{ height: contentHeight, overflow: overHeight }">
+        <div class="content" :class="{'is-top':!title}" :style="{ height: contentHeight, overflow: overHeight }">
           <div class="default" v-for="(value,key) in defaultMode">
             <div v-if="key === 'desc' && value!.length > 0" class="desc">
               <div v-for="item in value">{{ item }}</div>
@@ -44,9 +44,11 @@ const props = withDefaults(defineProps<{
   btnColor: '#ffffff',
   overHeight: 'normal',
   contentHeight: 'normal',
-  defaultMode: {
-    desc:[],
-    img:'',
+  defaultMode:()=> {
+    return {
+      desc:[],
+      img:'',
+    }
   },
   confirmClick:()=>{
     console.log('默认的click');
@@ -93,6 +95,10 @@ const confirmClick = () => {
       font-weight: bold;
       color: #2e2e33;
       text-align: center;
+    }
+
+    .is-top{
+      padding: 24px 0 0px;
     }
 
     .footer {

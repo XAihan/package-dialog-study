@@ -25,18 +25,16 @@ const confirmClick = () => {
 }
 
 showDialog({
-  // title:'这里是标题',
+  title:'这里是标题',
   btnText: '我知道了',
   defaultMode:{
-    desc:['放款成功后，可在“我的-我的订单-','加速卡-查看权益”，查看并使用特惠权益','123'],
-    img:'https://www.haohuan.com/datahub/gfs/2023-03/f1eb6b530a512b7f300a2baeb4810fe1.png',
+    desc:['放款成功后，可在“我的-我的订单-','加速卡-查看权益”，查看并使用特惠权益','1234123'],
+    // img:'https://www.haohuan.com/datahub/gfs/2023-03/f1eb6b530a512b7f300a2baeb4810fe1.png',
   },
   confirmClick:()=>{
     console.log('外面的click');
   }
 })
-
-
 
 </script>
 
