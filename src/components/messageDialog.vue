@@ -16,6 +16,10 @@
         </div>
         <div class="footer">
           <div class="btn" :style="{ color: btnColor }" @click="confirmClick">{{ btnText }}</div>
+          <div v-if="smallBtnText" class="small-btn">{{ smallBtnText }}</div>
+          <div v-if="tips" class="tips">
+            {{ tips }}
+          </div>
         </div>
       </div>
     </div>
@@ -38,6 +42,8 @@ const props = withDefaults(defineProps<{
   confirmClick:Function,
   defaultMode: DefaultMode,
   title?: string,
+  smallBtnText?:string,
+  tips?:string
 }>(), {
   show: false,
   btnText: '我知道了',
@@ -103,13 +109,9 @@ const confirmClick = () => {
 
     .footer {
       background: white;
-      display: flex;
-      justify-content: center;
-      height: 78px;
-      box-sizing: border-box;
+      margin-top:20px;
 
       .btn {
-        margin-top: 12px;
         width: 251px;
         height: 46px;
         background: #ff3838;
@@ -119,6 +121,25 @@ const confirmClick = () => {
         line-height: 46px;
         font-size: 16px;
         font-weight: 600;
+        margin: auto;
+      }
+      .small-btn{
+        font-weight: 400;
+        color: #919199;
+        line-height: 15px;
+        font-size: 13px;
+        text-align: center;
+        margin-top: 16px;
+        margin-bottom: 20px;
+      }
+      .tips{
+        font-weight: 400;
+        color: #C6CACE;
+        line-height: 12px;
+        font-size: 11px;
+        text-align: center;
+        margin-top: 20px;
+        padding-bottom: 10px;
       }
     }
   }
