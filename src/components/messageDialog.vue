@@ -4,7 +4,7 @@
       <div class="inner">
         <div v-if="title" class="title">{{ title }}</div>
         <div class="content" :class="{'is-top':!title}" :style="{ height: contentHeight, overflow: overHeight }">
-          <div class="default" v-for="(value,key) in defaultMode">
+          <div class="default" v-if="defaultMode" v-for="(value,key) in defaultMode">
             <div v-if="key === 'desc' && value!.length > 0" class="desc">
               <div v-for="item in value">{{ item }}</div>
             </div>
@@ -15,8 +15,12 @@
           <slot></slot>
         </div>
         <div class="footer">
-          <div class="btn" :style="{ color: btnColor }" @click="confirmClick">{{ btnText }}</div>
-          <div v-if="smallBtnText" class="small-btn">{{ smallBtnText }}</div>
+          <div v-if="cancelBtnText" class="btn-list">
+            <div class="btn cancel" :style="{ color: cancelBtnColor }"  @click="cancelClick">{{ cancelBtnText }}</div>
+            <div class="btn" :style="{ color: confirmBtnColor }" @click="confirmClick">{{ confirmBtnText }}</div>
+          </div>
+          <div class="btn" v-else :style="{ color: confirmBtnColor }" @click="confirmClick">{{ confirmBtnText }}</div>
+          <div v-if="smallBtnText" class="small-btn" @click="smallClick">{{ smallBtnText }}</div>
           <div v-if="tips" class="tips">
             {{ tips }}
           </div>
@@ -35,19 +39,22 @@ interface DefaultMode{
 }
 const props = withDefaults(defineProps<{
   show: boolean,
-  btnText: string,
-  btnColor: string,
+  confirmBtnText?: string,
+  confirmBtnColor?: string,
   contentHeight: string,
   overHeight: string,
-  confirmClick:Function,
-  defaultMode: DefaultMode,
+  confirmClick?:Function,
+  cancelClick?:Function,
+  smallClick?:Function,
+  defaultMode?: DefaultMode,
+  cancelBtnColor?: string,
+  cancelBtnText?: string,
   title?: string,
   smallBtnText?:string,
   tips?:string
 }>(), {
   show: false,
-  btnText: '我知道了',
-  btnColor: '#ffffff',
+  confirmBtnText: '我知道了',
   overHeight: 'normal',
   contentHeight: 'normal',
   defaultMode:()=> {
@@ -56,22 +63,32 @@ const props = withDefaults(defineProps<{
       img:'',
     }
   },
-  confirmClick:()=>{
-    console.log('默认的click');
-  }
+  confirmClick:()=>{},
+  cancelClick:()=>{},
+  smallClick:()=>{},
 })
 
 
 const dialogShow = ref(props.show)
-console.log('props', props);
 
-const emit = defineEmits(['confirmClick']);
+const emit = defineEmits(['confirmClick','cancelClick','smallClick']);
 const confirmClick = () => {
-  console.log('里面的click');
   dialogShow.value = false
   props.confirmClick()
   emit('confirmClick');
 };
+
+const cancelClick = () => {
+  dialogShow.value = false
+  props.cancelClick()
+  emit('cancelClick');
+}
+
+const smallClick = () => {
+  dialogShow.value = false
+  props.smallClick()
+  emit('smallClick');
+}
 </script>
   
 <style scoped lang="scss">
@@ -111,11 +128,29 @@ const confirmClick = () => {
       background: white;
       margin-top:20px;
 
+      .btn-list{
+        display: flex;
+        justify-content: space-between;
+        width: 255px;
+        height: 44px;
+        margin: auto;
+        .btn{
+          width: 120px;
+          height: 44px;
+        }
+        .cancel{
+          background: none;
+          border: 1px solid #C8C8CC;
+          box-sizing: border-box;
+          color: #2E2E33;
+        }
+      }
+
       .btn {
-        width: 251px;
+        width: 255px;
         height: 46px;
         background: #ff3838;
-        border-radius: 25px;
+        border-radius: 22px;
         color: #ffffff;
         text-align: center;
         line-height: 46px;

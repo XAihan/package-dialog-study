@@ -5,7 +5,7 @@ export const showDialog = (options: any) => {
 	return instance;
 };
 
-// 生成实例病挂在
+// 生成实例并挂载
 function mountComponent(RootComponent: Component, options:any) {
 	const app = createApp(RootComponent, {...options,show:true});
 	const root = document.createElement('div');
