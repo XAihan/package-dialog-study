@@ -1,4 +1,4 @@
-import { createApp, reactive, Component } from 'vue';
+import { createApp, Component } from 'vue';
 import MessageDialog from '@/components/messageDialog.vue';
 const showDialog = (options: any) => {
 	const { instance } = mountComponent(MessageDialog, options);
