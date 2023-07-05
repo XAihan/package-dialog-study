@@ -1,6 +1,6 @@
 import { createApp, reactive, Component } from 'vue';
 import MessageDialog from '@/components/messageDialog.vue';
-export const showDialog = (options: any) => {
+const showDialog = (options: any) => {
 	const { instance } = mountComponent(MessageDialog, options);
 	return instance;
 };
@@ -18,4 +18,9 @@ function mountComponent(RootComponent: Component, options:any) {
 			document.body.removeChild(root);
 		},
 	};
+}
+
+export {
+	MessageDialog,
+	showDialog
 }
